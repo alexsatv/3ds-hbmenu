@@ -234,14 +234,26 @@ void backgroundUpdate(void)
 
 void bubbleDraw(bubble_t* bubble, float top, float iod)
 {
-	if ((bubble->y+32) <= top)
-		return; // Nothing to do
-	u32 color = ((u32)bubble->fade << 24) | 0xFFFFFF;
-	float x = bubble->x + iod*(10+10*bubble->z) + 16*bubble->angleSin;
-	float y = bubble->y - top;
-	if (top > 0.0f)
-		x -= (400-320)/2;
-	drawingDrawImage(images_bubble_idx, color, x, y);
+    if ((bubble->y + 32) <= top)
+        return; // Nothing to do
+    u32 color;
+
+    if (g_darkMode)
+    {
+        color = ((u32)bubble->fade << 24) | 0x000000; // Black
+    }
+    else
+    {
+        color = ((u32)bubble->fade << 24) | 0xFFFFFF; // White
+    }
+
+    float x = bubble->x + iod * (10 + 10 * bubble->z) + 16 * bubble->angleSin;
+    float y = bubble->y - top;
+
+    if (top > 0.0f)
+        x -= (400 - 320) / 2;
+
+    drawingDrawImage(images_bubble_idx, color, x, y);
 }
 
 void backgroundDrawTop(float iod)
@@ -254,19 +266,36 @@ void backgroundDrawTop(float iod)
 	drawingSetMode(DRAW_MODE_DRAWING);
 	drawingSetZ(1.0f);
 	drawingEnableDepth(false);
-	drawingWithColor(0xFFFF8400);
+	drawingWithColor(g_darkMode ? 0xFF362200 : 0xFFFF8400); 
 	drawingDrawQuad(0.0f, 0.0f, 400.0f, 240.0f);
 
 	// Draw the wave
 	drawingSetMode(DRAW_MODE_WAVE);
 	drawingWithVertexColor();
-	drawingSetGradient(0, 1.0f, 1.0f, 1.0f, 0.0f);
-	drawingSetGradient(1, 1.0f, 1.0f, 1.0f, 1.0f);
-	drawingDrawWave(wavePoints, WAVE_NUMPOINTS, 0.0f, 400.0f, -4.0f, +0.0f);
-	drawingSetGradient(0, 1.0f, 1.0f, 1.0f, 1.0f);
-	drawingSetGradient(1, 0.2588f, 0.6392f, 1.0f, 1.0f);
-	drawingDrawWave(wavePoints, WAVE_NUMPOINTS, 0.0f, 400.0f, +0.0f, +8.0f);
-	drawingSetGradient(0, 0.2588f, 0.6392f, 1.0f, 1.0f);
+
+	if (g_darkMode) {
+		drawingSetGradient(1, 0.0f, 0.09f, 0.25f, 0.0f);
+		drawingSetGradient(0, 0.10f, 0.14f, 0.25f, 1.0f);
+		drawingDrawWave(wavePoints, WAVE_NUMPOINTS, 0.0f, 400.0f, -4.0f, +0.0f);
+
+		drawingSetGradient(0, 0.0f, 0.17f, 0.33f, 1.0f);
+		drawingSetGradient(1, 0.0f, 0.08f, 0.15f, 1.0f);
+		drawingDrawWave(wavePoints, WAVE_NUMPOINTS, 0.0f, 400.0f, +0.0f, +8.0f);
+
+		drawingSetGradient(1, 0.08f, 0.12f, 0.02f, 1.0f);
+	}
+	else {	
+		drawingSetGradient(0, 1.0f, 1.0f, 1.0f, 0.0f);
+		drawingSetGradient(1, 1.0f, 1.0f, 1.0f, 1.0f);
+		drawingDrawWave(wavePoints, WAVE_NUMPOINTS, 0.0f, 400.0f, -4.0f, +0.0f);
+
+		drawingSetGradient(0, 1.0f, 1.0f, 1.0f, 1.0f);
+		drawingSetGradient(1, 0.2588f, 0.6392f, 1.0f, 1.0f);
+		drawingDrawWave(wavePoints, WAVE_NUMPOINTS, 0.0f, 400.0f, +0.0f, +8.0f);
+
+		drawingSetGradient(0, 0.2588f, 0.6392f, 1.0f, 1.0f);
+	}
+
 	drawingDrawWave(wavePoints, WAVE_NUMPOINTS, 0.0f, 400.0f, +8.0f, +240.0f);
 	drawingSetMode(DRAW_MODE_DRAWING);
 	drawingEnableDepth(true);
@@ -306,7 +335,8 @@ void backgroundDrawBot(void)
 	// Clear screen
 	drawingSetZ(0.8f);
 	drawingEnableDepth(false);
-	drawingWithColor(0xFFFFA342);
+
+	drawingWithColor(g_darkMode ? 0xFF462700 : 0xFFFFA342);
 	drawingDrawQuad(0.0f, 0.0f, 320.0f, 240.0f);
 	drawingSubmitPrim(GPU_TRIANGLE_STRIP, 4);
 	drawingEnableDepth(true);

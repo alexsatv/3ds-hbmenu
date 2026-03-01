@@ -266,7 +266,7 @@ static void drawingBottomScreen(void)
 		drawingSetMode(DRAW_MODE_DRAWING);
 		drawingSetZ(0.0f);
 
-		drawingWithColor(0x80FFFFFF);
+		drawingWithColor(g_darkMode ? 0x80000000 : 0x80FFFFFF);
 		drawingDrawQuad(0.0f, 80.0f, 320.0f, 100.0f);
 
 		for (i = 0; i < 8; i ++)
@@ -278,7 +278,7 @@ static void drawingBottomScreen(void)
 		}
 		counter += g_drawFrames*0.5f/60;
 
-		textSetColor(0xFF000000); // black
+		textSetColor(g_darkMode ? 0xFFFFFFFF : 0xFF000000);
 		textDrawInBox(textGetString(StrId_Loading), 0, 0.5f, 0.5f, 170.f, 0.0f, 320.0f);
 	}
 

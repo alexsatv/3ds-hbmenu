@@ -11,6 +11,8 @@ typedef struct
 
 extern imageInfo_s* g_imageData;
 
+extern bool g_darkMode;
+
 #define DRAWING_MAX_VERTICES 8192
 
 typedef enum

@@ -45,11 +45,11 @@ void networkDrawBot(StrId titleStrId, const char* other, bool transferring, size
 	drawingSetMode(DRAW_MODE_DRAWING);
 	drawingSetZ(0.4f);
 
-	drawingWithColor(0x80FFFFFF);
+	drawingWithColor(g_darkMode ? 0x8016080A : 0x80FFFFFF);
 	drawingDrawQuad(0.0f, 60.0f, 320.0f, 120.0f);
 	drawingSubmitPrim(GPU_TRIANGLE_STRIP, 4);
 
-	textSetColor(0xFF545454);
+	textSetColor(g_darkMode ? 0xFFF6F6EA : 0xFF545454);
 	textDrawInBox(textGetString(titleStrId), 0, 0.75f, 0.75f, 60.0f+25.0f, 8.0f, 320-8.0f);
 
 	char buf[256];

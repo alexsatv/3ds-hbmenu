@@ -15,6 +15,8 @@ To install hbmenu, simply copy `boot.3dsx` to the root of your SD card. If you a
 
 Use the D-Pad, Circle Pad or the touchscreen to select an application, and press A or touch it again to start it. Use the C-Stick alternatively on New 3DS to scroll the list of applications.
 
+Press the R button to toggle dark mode.
+
 hbmenu supports starring applications, so that they are shown at the beginning of the list. The SELECT button stars/unstars the currently selected homebrew application.
 
 On \*hax 2.x, it is not possible to go back to the 3DS HOME menu using the HOME button. As an alternative, you can press the START button where you can reboot your console or relaunch HOME menu.

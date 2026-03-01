@@ -26,6 +26,7 @@ static void startup(void* unused)
 }
 
 const char* __romfs_path = "sdmc:/boot.3dsx";
+bool g_darkMode = true; // Default to dark mode
 
 int main()
 {
@@ -35,7 +36,6 @@ int main()
 	rc = romfsInit();
 	if (R_FAILED(rc))
 		svcBreak(USERBREAK_PANIC);
-
 	menuStartupPath();
 	hidSetRepeatParameters(20, 10);
 	ptmuInit();
