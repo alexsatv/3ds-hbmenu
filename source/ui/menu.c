@@ -263,11 +263,11 @@ void menuDrawTop(float iod)
 	drawingSetMode(DRAW_MODE_DRAWING);
 	drawingSetZ(0.4f);
 
-	drawingWithColor(0x60FFFFFF);
+	drawingWithColor(g_customTheme ? themeInfo.topOverlaysBgColor : 0x60FFFFFF);
 	drawingDrawQuad(0.0f, 240-24.0f, 400.0f, 24.0f);
 	drawingSubmitPrim(GPU_TRIANGLE_STRIP, 4);
 
-	textSetColor(0xFF545454);
+	textSetColor(g_customTheme ? themeInfo.topTextColor : 0xFF545454);
 	textDrawInBox(menu->dirname, 0, 0.5f, 0.5f, 240.0f-8, 8.0f, 400-8.0f);
 }
 
@@ -288,7 +288,7 @@ float menuDrawEntry(menuEntry_s* me, float x, float y, bool selected)
 
 	if (selected)
 		drawingDrawImage(images_appbubble_idx, 0x80808080, x, y+4);
-	drawingDrawImage(images_appbubble_idx, !me->isStarred ? 0xFFFFFFFF : 0xFFD0FFFF, x, y);
+	drawingDrawImage(images_appbubble_idx, !me->isStarred ? (g_customTheme ? themeInfo.menuEntryColor : 0xFFFFFFFF) : (g_customTheme ? themeInfo.starredMenuEntryColor : 0xFFD0FFFF), x, y);
 
 	if (me->icon)
 	{
@@ -306,7 +306,7 @@ float menuDrawEntry(menuEntry_s* me, float x, float y, bool selected)
 		drawingDrawImage(images_star_idx, 0xFFFFFFFF, x - 0.25f*starWidth, y+bubbleHeight-0.75*starHeight);
 	}
 
-	textSetColor(0xFF545454);
+	textSetColor(g_customTheme ? themeInfo.botTextColor :0xFF545454);
 	textDrawInBox(me->name, -1, 0.5f, 0.5f, y+20, x+66, x+bubbleWidth-8);
 	textDrawInBox(me->description, -1, 0.4f, 0.4f, y+35, x+66+4, x+bubbleWidth-8);
 	textDrawInBox(me->author, 1, 0.4f, 0.4f, y+bubbleHeight-6, x+66, x+bubbleWidth-8);
@@ -336,11 +336,11 @@ void menuDrawBot(void)
 
 	if (menu->nEntries==0)
 	{
-		drawingWithColor(0x80FFFFFF);
+		drawingWithColor(g_customTheme ? themeInfo.overlaysBgColor : 0x80FFFFFF);
 		drawingDrawQuad(0.0f, 60.0f, 320.0f, 120.0f);
 		drawingSubmitPrim(GPU_TRIANGLE_STRIP, 4);
 
-		textSetColor(0xFF545454);
+		textSetColor(g_customTheme ? themeInfo.botTextColor : 0xFF545454);
 		textDrawInBox(textGetString(StrId_NoAppsFound_Title), 0, 0.75f, 0.75f, 60.0f+25.0f, 8.0f, 320-8.0f);
 		textDraw(8.0f, 60.0f+25.0f+8.0f, 0.5f, 0.5f, false, textGetString(StrId_NoAppsFound_Msg));
 	} else
@@ -352,8 +352,8 @@ void menuDrawBot(void)
 			y += menuDrawEntry(me, 9.0f, 4+y-loc, i==menu->curEntry);
 
 		// Draw scrollbar
-		drawingDrawImage(images_scrollbarTrack_idx, 0xFFFFFFFF, 308.0f, 5.0f);
-		drawingDrawImage(images_scrollbarKnob_idx,  0xFFFFFFFF, 308.0f, calcScrollbarKnobPos(menu, y));
+		drawingDrawImage(images_scrollbarTrack_idx, g_customTheme ? themeInfo.scrollBarColor : 0xFFFFFFFF, 308.0f, 5.0f);
+		drawingDrawImage(images_scrollbarKnob_idx,  g_customTheme ? themeInfo.scrollBarColor : 0xFFFFFFFF, 308.0f, calcScrollbarKnobPos(menu, y));
 	}
 
 	drawingDrawImage(images_settings_idx, 0xFFFFFFFF, 320.0f-g_imageData[images_settings_idx].width, 240.0f-g_imageData[images_settings_idx].height);

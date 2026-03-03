@@ -1,5 +1,6 @@
 #include "drawing.h"
 #include "program_shbin.h"
+#include "ui/themeloader.h"
 
 // Global variables
 imageInfo_s* g_imageData;
@@ -160,9 +161,14 @@ void drawingSetTex(C3D_Tex* tex)
 	C3D_TexBind(0, tex);
 }
 
-void drawingSetGradient(unsigned which, float r, float g, float b, float a)
+void drawingSetGradient(unsigned which, u32 color)
 {
-	C3D_FVUnifSet(GPU_VERTEX_SHADER, uLoc_gradient+which, r, g, b, a);
+    float a = ((color >> 24) & 0xFF) / 255.0f;
+    float b = ((color >> 16) & 0xFF) / 255.0f;
+    float g = ((color >>  8) & 0xFF) / 255.0f;
+    float r = ((color      ) & 0xFF) / 255.0f;
+
+    C3D_FVUnifSet(GPU_VERTEX_SHADER, uLoc_gradient + which, r, g, b, a);
 }
 
 void drawingWithVertexColor(void)
@@ -227,15 +233,15 @@ static void drawingTopScreen(float iod)
 	ui = uiGetStateInfo();
 	if (ui->drawTop) ui->drawTop(iod);
 
-	/*
+	
 	// Draw debug text
-	static char debugText[128];
-	snprintf(debugText, sizeof(debugText), "Cmdbuf usage: %d%%", (int)(C3D_GetCmdBufUsage()*100));
-	*/
+	/* static char debugText[128];
+	snprintf(debugText, sizeof(debugText), "Cmdbuf usage: %d%%", (int)(C3D_GetCmdBufUsage()*100)); */
+	
 
 	drawingSetMode(DRAW_MODE_DRAWING);
 	drawingSetZ(0.0f);
-	textSetColor(0xFFFFFFFF);
+	textSetColor(g_customTheme ? themeInfo.topTextColor : 0xFFFFFFFF); // default color is white
 	//textDraw(8.0f, 32.0f, 0.5f, 0.5f, true, debugText);
 
 	// Draw fade
@@ -266,7 +272,7 @@ static void drawingBottomScreen(void)
 		drawingSetMode(DRAW_MODE_DRAWING);
 		drawingSetZ(0.0f);
 
-		drawingWithColor(0x80FFFFFF);
+		drawingWithColor(g_customTheme ? themeInfo.overlaysBgColor : 0x80FFFFFF);
 		drawingDrawQuad(0.0f, 80.0f, 320.0f, 100.0f);
 
 		for (i = 0; i < 8; i ++)
@@ -278,7 +284,7 @@ static void drawingBottomScreen(void)
 		}
 		counter += g_drawFrames*0.5f/60;
 
-		textSetColor(0xFF000000); // black
+		textSetColor(g_customTheme ? themeInfo.botTextColor : 0xFF000000); // default color is black
 		textDrawInBox(textGetString(StrId_Loading), 0, 0.5f, 0.5f, 170.f, 0.0f, 320.0f);
 	}
 

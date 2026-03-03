@@ -236,7 +236,7 @@ void bubbleDraw(bubble_t* bubble, float top, float iod)
 {
 	if ((bubble->y+32) <= top)
 		return; // Nothing to do
-	u32 color = ((u32)bubble->fade << 24) | 0xFFFFFF;
+	u32 color = ((u32)bubble->fade << 24) | (g_customTheme ? themeInfo.bubbleColor : 0xFFFFFF);
 	float x = bubble->x + iod*(10+10*bubble->z) + 16*bubble->angleSin;
 	float y = bubble->y - top;
 	if (top > 0.0f)
@@ -254,19 +254,19 @@ void backgroundDrawTop(float iod)
 	drawingSetMode(DRAW_MODE_DRAWING);
 	drawingSetZ(1.0f);
 	drawingEnableDepth(false);
-	drawingWithColor(0xFFFF8400);
+	drawingWithColor(g_customTheme ? themeInfo.topBgColor : 0xFFFF8400);
 	drawingDrawQuad(0.0f, 0.0f, 400.0f, 240.0f);
 
 	// Draw the wave
 	drawingSetMode(DRAW_MODE_WAVE);
 	drawingWithVertexColor();
-	drawingSetGradient(0, 1.0f, 1.0f, 1.0f, 0.0f);
-	drawingSetGradient(1, 1.0f, 1.0f, 1.0f, 1.0f);
+	drawingSetGradient(0, g_customTheme ? themeInfo.topStrokeWaveColor : 0x00FFFFFF);
+	drawingSetGradient(1, g_customTheme ? themeInfo.botStrokeWaveColor : 0xFFFFFFFF);
 	drawingDrawWave(wavePoints, WAVE_NUMPOINTS, 0.0f, 400.0f, -4.0f, +0.0f);
-	drawingSetGradient(0, 1.0f, 1.0f, 1.0f, 1.0f);
-	drawingSetGradient(1, 0.2588f, 0.6392f, 1.0f, 1.0f);
+	drawingSetGradient(0, g_customTheme ? themeInfo.waveGradientStartColor : 0xFFFFFFFF);
+	drawingSetGradient(1, g_customTheme ? themeInfo.waveGradientEndColor : 0xFFFFA342);
 	drawingDrawWave(wavePoints, WAVE_NUMPOINTS, 0.0f, 400.0f, +0.0f, +8.0f);
-	drawingSetGradient(0, 0.2588f, 0.6392f, 1.0f, 1.0f);
+	drawingSetGradient(0, g_customTheme ? themeInfo.waveGradientEndColor : 0xFFFFA342);
 	drawingDrawWave(wavePoints, WAVE_NUMPOINTS, 0.0f, 400.0f, +8.0f, +240.0f);
 	drawingSetMode(DRAW_MODE_DRAWING);
 	drawingEnableDepth(true);
@@ -283,7 +283,7 @@ void backgroundDrawTop(float iod)
 	float logo_left = floorf(0.5f*(400.0f - logo_width));
 	float logo_right = 400.0f - logo_left;
 
-	textSetColor(0xFFFFFFFF);
+	textSetColor(g_customTheme ? themeInfo.topTextColor : 0xFFFFFFFF);
 	textDrawInBox(timeString, 0, 0.5f, 0.5f, 15.0f, 0.0f, 400.0f);
 	textDrawInBox(versionString, 1, 0.5f, 0.5f, 200.0f, 80.0f, logo_right);
 #ifdef DBGSTRING
@@ -292,9 +292,9 @@ void backgroundDrawTop(float iod)
 
 	float posX = 20.0f*sinf(C3D_Angle(logoPosX));
 	float posY =  6.0f*sinf(C3D_Angle(logoPosY));
-	drawingDrawImage(logoImg, 0xFFFFFFFF, logo_left+posX-iod*6.0f, 63.0f+posY);
-	drawingDrawImage(wifiLevels[wifiStatus], 0xFFFFFFFF, 0.0f, 0.0f);
-	drawingDrawImage(charging ? images_batteryCharge_idx : batteryLevels[batteryLevel], 0xFFFFFFFF, 400.0f-27, 0.0f);
+	drawingDrawImage(logoImg, g_customTheme ? themeInfo.logoColor : 0xFFFFFFFF, logo_left+posX-iod*6.0f, 63.0f+posY);
+	drawingDrawImage(wifiLevels[wifiStatus], g_customTheme ? themeInfo.logoColor : 0xFFFFFFFF, 0.0f, 0.0f);
+	drawingDrawImage(charging ? images_batteryCharge_idx : batteryLevels[batteryLevel],  g_customTheme ? themeInfo.logoColor : 0xFFFFFFFF, 400.0f-27, 0.0f);
 }
 
 void backgroundDrawBot(void)
@@ -306,7 +306,7 @@ void backgroundDrawBot(void)
 	// Clear screen
 	drawingSetZ(0.8f);
 	drawingEnableDepth(false);
-	drawingWithColor(0xFFFFA342);
+	drawingWithColor(g_customTheme ? themeInfo.waveGradientEndColor : 0xFFFFA342);
 	drawingDrawQuad(0.0f, 0.0f, 320.0f, 240.0f);
 	drawingSubmitPrim(GPU_TRIANGLE_STRIP, 4);
 	drawingEnableDepth(true);

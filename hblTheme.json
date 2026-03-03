@@ -1,0 +1,16 @@
+{
+    "topBgColor": "#FFCE2979",
+    "logoColor": "#FFa7e575",
+    "botTextColor": "#FF213315",
+    "topTextColor": "#FFABDB8C",
+    "overlaysBgColor": "#808ABC69",
+    "topOverlaysBgColor": "#705b7f44",
+    "menuEntryColor": "#FFABDB8C",
+    "starredMenuEntryColor": "#FF8ABC69",
+    "topStrokeWaveColor": "#00FFFFFF",
+    "botStrokeWaveColor": "#FFFFFFFF",
+    "waveGradientStartColor": "#FFFFFFFF",
+    "waveGradientEndColor": "#FFFF68A2",
+    "scrollBarColor": "#FFABDB8C",
+    "bubbleColor": "#000000"
+}

@@ -118,11 +118,11 @@ void titleSelectDrawBot(void)
 	drawingSetMode(DRAW_MODE_DRAWING);
 	drawingSetZ(0.4f);
 
-	drawingWithColor(0x80FFFFFF);
+	drawingWithColor(g_customTheme ? themeInfo.overlaysBgColor : 0x80FFFFFF);
 	drawingDrawQuad(0.0f, 10.0f, 320.0f, 120.0f);
 	drawingSubmitPrim(GPU_TRIANGLE_STRIP, 4);
 
-	textSetColor(0xFF545454);
+	textSetColor(g_customTheme ? themeInfo.botTextColor : 0xFF545454);
 	textDrawInBox(textGetString(StrId_TitleSelector), 0, 0.75f, 0.75f, 10.0f+25.0f, 8.0f, 320-8.0f);
 	textDraw(8.0f, 10.0f+25.0f+8.0f, 0.5f, 0.5f, false, textGetString(StrId_SelectTitle));
 

@@ -45,7 +45,7 @@ void networkDrawBot(StrId titleStrId, const char* other, bool transferring, size
 	drawingSetMode(DRAW_MODE_DRAWING);
 	drawingSetZ(0.4f);
 
-	drawingWithColor(0x80FFFFFF);
+	drawingWithColor(g_customTheme ? themeInfo.overlaysBgColor : 0x80FFFFFF);
 	drawingDrawQuad(0.0f, 60.0f, 320.0f, 120.0f);
 	drawingSubmitPrim(GPU_TRIANGLE_STRIP, 4);
 

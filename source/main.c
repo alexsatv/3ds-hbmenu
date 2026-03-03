@@ -26,10 +26,20 @@ static void startup(void* unused)
 }
 
 const char* __romfs_path = "sdmc:/boot.3dsx";
+bool g_customTheme = true;
+themeInfo_s themeInfo = {0};
 
 int main()
 {
 	Result rc;
+
+	char* buffer = readJSONFile();
+	if (buffer != NULL) {
+		parseThemeFile(buffer, &themeInfo);
+		free(buffer);
+	} else {
+		printf("Theme file not loaded.\n");
+	}
 
 	osSetSpeedupEnable(true);
 	rc = romfsInit();

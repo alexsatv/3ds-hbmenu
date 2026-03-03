@@ -1,6 +1,7 @@
 #pragma once
 #include "common.h"
 #include "images.h"
+#include "ui/themeloader.h"
 
 typedef int ImageId;
 
@@ -10,6 +11,8 @@ typedef struct
 } imageInfo_s;
 
 extern imageInfo_s* g_imageData;
+extern bool g_customTheme;
+extern themeInfo_s themeInfo;
 
 #define DRAWING_MAX_VERTICES 8192
 
@@ -41,7 +44,7 @@ void drawingEnableDepth(bool enable);
 void drawingSetMode(DrawingMode mode);
 void drawingSetZ(float z);
 void drawingSetTex(C3D_Tex* tex);
-void drawingSetGradient(unsigned which, float r, float g, float b, float a);
+void drawingSetGradient(unsigned which, u32 color);
 
 void drawingWithVertexColor(void);
 void drawingWithColor(u32 color);
