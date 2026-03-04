@@ -287,7 +287,7 @@ float menuDrawEntry(menuEntry_s* me, float x, float y, bool selected)
 		return height;
 
 	if (selected)
-		drawingDrawImage(images_appbubble_idx, 0x80808080, x, y+4);
+		drawingDrawImage(images_appbubble_idx, g_customTheme ? themeInfo.menuEntryShadow : 0x80808080, x, y+4);
 	drawingDrawImage(images_appbubble_idx, !me->isStarred ? (g_customTheme ? themeInfo.menuEntryColor : 0xFFFFFFFF) : (g_customTheme ? themeInfo.starredMenuEntryColor : 0xFFD0FFFF), x, y);
 
 	if (me->icon)

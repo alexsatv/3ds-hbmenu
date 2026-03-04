@@ -82,6 +82,13 @@ void parseThemeFile(char* jsonString, themeInfo_s* themeInfo) {
             themeInfo->menuEntryColor = (u32)strtoul(value + 1, NULL, 16);
             free(value);
             i++;
+        } else if (jsoneq(jsonString, &t[i], "menuEntryShadow") == 0) {
+            /* We may use strndup() to fetch string value */
+            int len = t[i+1].end - t[i+1].start;
+            char* value = strndup(jsonString + t[i+1].start, len);
+            themeInfo->menuEntryShadow = (u32)strtoul(value + 1, NULL, 16);
+            free(value);
+            i++;
         } else if (jsoneq(jsonString, &t[i], "starredMenuEntryColor") == 0) {
             /* We may use strndup() to fetch string value */
             int len = t[i+1].end - t[i+1].start;

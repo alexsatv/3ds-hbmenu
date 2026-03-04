@@ -9,6 +9,7 @@ typedef struct
 	u32 overlaysBgColor;
 	u32 topOverlaysBgColor;
 	u32 menuEntryColor;
+	u32 menuEntryShadow;
 	u32 starredMenuEntryColor;
 	u32 topStrokeWaveColor;
 	u32 botStrokeWaveColor;	
@@ -19,6 +20,7 @@ typedef struct
 	u32 bubbleColor;
 } themeInfo_s;
 
+extern bool g_customTheme;
 void parseThemeFile(char* jsonString, themeInfo_s* themeInfo);
 char* readJSONFile(void);
 
